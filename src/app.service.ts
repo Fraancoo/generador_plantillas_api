@@ -3,6 +3,6 @@ import { Injectable } from '@nestjs/common';
 @Injectable()
 export class AppService {
   getHello(): string {
-    return 'Generador de plantillas';
+    return 'Generador de plantillas API';
   }
 }
