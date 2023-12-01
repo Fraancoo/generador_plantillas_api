@@ -16,9 +16,6 @@ export class CampoDto {
   @IsString()
   nombreCampo: string;
 
-  @IsBoolean()
-  obligatorio: boolean;
-
   @IsObject()
   @Type(() => TipoResultadoDto)
   tipoResultado: TipoResultadoDto;

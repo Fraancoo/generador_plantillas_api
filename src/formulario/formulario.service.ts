@@ -2,52 +2,70 @@ import { Injectable } from '@nestjs/common';
 
 import { CampoDto } from './dto/campo.dto';
 import { PlantillaDto } from './dto/plantilla.dto';
+import { CampoPropsDto } from './dto/seccion.dto';
 
 @Injectable()
 export class FormularioService {
   generateFormulario(plantilla: PlantillaDto) {
-    var res = '';
+    var res = `<div class='form_div_secciones'>`;
 
     plantilla.secciones.map((s, i_secc) => {
-      res += `<div class='div_seccion'>`;
-      res += `<h2>${s.nombreSeccion}</h2>`;
-      res += `<div class='div_campos'>`;
-      res += this.genearteCampo(s.campos, i_secc);
+      res += `<div class='form_div_seccion'>`;
+      res += `<h2 class='form_seccion_title'>${s.nombreSeccion}</h2>`;
+      res += `<div class='form_div_campos'>`;
+      res += this.generateCampos(s.campos, s.camposProps, i_secc);
       res += `</div></div>`;
     });
 
+    res += '</div>';
     return res;
   }
 
-  genearteCampo(campos: CampoDto[], i_secc: number) {
+  generateCampos(
+    campos: CampoDto[],
+    camposProps: CampoPropsDto[],
+    i_secc: number,
+  ) {
     var res = '';
 
     campos.map((c, i_camp) => {
-      var id = 'secc_' + i_secc + '_camp_' + i_camp;
-      res += `<div class='div_campo'>`;
+      var id = 'secc_' + i_secc + '_camp_' + i_camp,
+        obl = '';
+      const campoProps = camposProps.find((cp) => cp.idCampo === c.idCampo);
+
+      if (campoProps.obligatorio)
+        obl = "<span class='form_obligatorio'>*</span>";
 
       switch (c.tipoResultado.idTipoResultado) {
         case 'num':
-          res += `<label for='${id}' class='label_line'>${c.nombreCampo}</label>`;
-          res += `<input type='number' id='${id}' name='${c.idCampo}' class='input'/>`;
+          res += `<div class='form_div_campo_line'>`;
+          res += `<label for='${id}' class='form_label'>${obl + ' ' + c.nombreCampo}: </label>`;
+          res += `<input type='number' id='${id}' name='${c.idCampo}' class='form_input'/>`;
           break;
 
         case 'log':
-          res += `<label class='label_block' for='${id}'>`;
-          res += `<span>${c.nombreCampo}</span>`;
-          res += `<input type='radio' class='radio' id='${id}_pos' name='${c.idCampo}'/>`;
-          res += `<input type='radio' class='radio' id='${id}_neg' name='${c.idCampo}'/>`;
+          res += `<div class='form_div_campo_line'>`;
+          res += `<label for='${id}' class='form_label'>${obl + ' ' + c.nombreCampo}: </label>`;
+          res += `<label for='${id}_pos' class='form_radio'>`;
+          res += '<span>positivo</span>';
+          res += `<input type='radio' id='${id}_pos' name='${c.idCampo}'/>`;
+          res += '</label>';
+          res += `<label for='${id}_neg' class='form_radio'>`;
+          res += '<span>negativo</span>';
+          res += `<input type='radio' id='${id}_neg' name='${c.idCampo}'/>`;
           res += '</label>';
           break;
 
         case 'text':
-          res += `<label for='${id}' class='label_block'>${c.nombreCampo}</label>`;
-          res += `<input type='text' id='${id}' name='${c.idCampo}' class='input'/>`;
+          res += `<div class='form_div_campo'>`;
+          res += `<label for='${id}' class='form_label'>${obl + ' ' + c.nombreCampo}:</label>`;
+          res += `<input type='text' id='${id}' name='${c.idCampo}' class='form_input'/>`;
           break;
 
         case 'rich_text':
-          res += `<label for='${id}' class='label_block'>${c.nombreCampo}</label>`;
-          res += `<textarea type='text' id='${id}' name='${c.idCampo}' class='textarea'></textarea>`;
+          res += `<div class='form_div_campo'>`;
+          res += `<label for='${id}' class='form_label'>${obl + ' ' + c.nombreCampo}:</label>`;
+          res += `<textarea type='text' id='${id}' name='${c.idCampo}' class='form_textarea'></textarea>`;
           break;
 
         default:
