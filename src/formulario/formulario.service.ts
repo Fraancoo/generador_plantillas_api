@@ -14,9 +14,16 @@ export class FormularioService {
       res += `<h2 class='form_seccion_title'>${s.nombreSeccion}</h2>`;
       res += `<div class='form_div_campos'>`;
       res += this.generateCampos(s.campos, s.camposProps, i_secc);
-      res += `</div></div>`;
+      res += `</div>`;
+      res += `</div>`;
     });
 
+    // res += `<div>`;
+    // res += `<button onclick='foo()'>Send</button>`;
+    // res += `</div>`;
+    // res += `<script>`;
+    // res += `function foo() { console.log(1); }`;
+    // res += `</script>`;
     res += '</div>';
     return res;
   }
@@ -39,13 +46,17 @@ export class FormularioService {
       switch (c.tipoResultado.idTipoResultado) {
         case 'num':
           res += `<div class='form_div_campo_line'>`;
-          res += `<label for='${id}' class='form_label'>${obl + ' ' + c.nombreCampo}: </label>`;
+          res += `<label for='${id}' class='form_label'>${
+            obl + ' ' + c.nombreCampo
+          }</label>`;
           res += `<input type='number' id='${id}' name='${c.idCampo}' class='form_input'/>`;
           break;
 
         case 'log':
           res += `<div class='form_div_campo_line'>`;
-          res += `<label for='${id}' class='form_label'>${obl + ' ' + c.nombreCampo}: </label>`;
+          res += `<label for='${id}' class='form_label'>${
+            obl + ' ' + c.nombreCampo
+          }</label>`;
           res += `<label for='${id}_pos' class='form_radio'>`;
           res += '<span>positivo</span>';
           res += `<input type='radio' id='${id}_pos' name='${c.idCampo}'/>`;
@@ -58,13 +69,17 @@ export class FormularioService {
 
         case 'text':
           res += `<div class='form_div_campo'>`;
-          res += `<label for='${id}' class='form_label'>${obl + ' ' + c.nombreCampo}:</label>`;
+          res += `<label for='${id}' class='form_label'>${
+            obl + ' ' + c.nombreCampo
+          }</label>`;
           res += `<input type='text' id='${id}' name='${c.idCampo}' class='form_input'/>`;
           break;
 
         case 'rich_text':
           res += `<div class='form_div_campo'>`;
-          res += `<label for='${id}' class='form_label'>${obl + ' ' + c.nombreCampo}:</label>`;
+          res += `<label for='${id}' class='form_label'>${
+            obl + ' ' + c.nombreCampo
+          }</label>`;
           res += `<textarea type='text' id='${id}' name='${c.idCampo}' class='form_textarea'></textarea>`;
           break;
 
@@ -77,5 +92,10 @@ export class FormularioService {
     });
 
     return res;
+  }
+
+  generateStyles() {
+    var styles = '';
+    return styles;
   }
 }
