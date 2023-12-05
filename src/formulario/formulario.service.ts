@@ -18,12 +18,11 @@ export class FormularioService {
       res += `</div>`;
     });
 
-    // res += `<div>`;
-    // res += `<button onclick='foo()'>Send</button>`;
-    // res += `</div>`;
-    // res += `<script>`;
-    // res += `function foo() { console.log(1); }`;
-    // res += `</script>`;
+    res += `<div class='div_btns'>`;
+    res += `<button id='saveBackup' class='btn btn_50 btn_green'>Guardar respaldo</button>`;
+    res += `<button id='saveDoc' class='btn btn_50 btn_blue'>Guardar documento</button>`;
+    res += `<button id='deleteDoc' class='btn btn_100 btn_red'>Eliminar documento</button>`;
+    res += `</div>`;
     res += '</div>';
     return res;
   }
@@ -49,38 +48,32 @@ export class FormularioService {
           res += `<label for='${id}' class='form_label'>${
             obl + ' ' + c.nombreCampo
           }</label>`;
-          res += `<input type='number' id='${id}' name='${c.idCampo}' class='form_input'/>`;
+          res += `<input type='number' id='${id}' name='${c.nombreCampo}' class='form_input'/>`;
           break;
 
         case 'log':
           res += `<div class='form_div_campo_line'>`;
-          res += `<label for='${id}' class='form_label'>${
-            obl + ' ' + c.nombreCampo
-          }</label>`;
+          res += `<label for='${id}' class='form_label'>${obl} ${c.nombreCampo}</label>`;
           res += `<label for='${id}_pos' class='form_radio'>`;
           res += '<span>positivo</span>';
-          res += `<input type='radio' id='${id}_pos' name='${c.idCampo}'/>`;
+          res += `<input type='radio' id='${id}_pos' name='${c.nombreCampo}'/>`;
           res += '</label>';
           res += `<label for='${id}_neg' class='form_radio'>`;
           res += '<span>negativo</span>';
-          res += `<input type='radio' id='${id}_neg' name='${c.idCampo}'/>`;
+          res += `<input type='radio' id='${id}_neg' name='${c.nombreCampo}'/>`;
           res += '</label>';
           break;
 
         case 'text':
           res += `<div class='form_div_campo'>`;
-          res += `<label for='${id}' class='form_label'>${
-            obl + ' ' + c.nombreCampo
-          }</label>`;
-          res += `<input type='text' id='${id}' name='${c.idCampo}' class='form_input'/>`;
+          res += `<label for='${id}' class='form_label'>${obl} ${c.nombreCampo}</label>`;
+          res += `<input id='${id}' name='${c.nombreCampo}' secc='${i_secc}' camp='${i_camp}' type='text' class='form_input'/>`;
           break;
 
         case 'rich_text':
           res += `<div class='form_div_campo'>`;
-          res += `<label for='${id}' class='form_label'>${
-            obl + ' ' + c.nombreCampo
-          }</label>`;
-          res += `<textarea type='text' id='${id}' name='${c.idCampo}' class='form_textarea'></textarea>`;
+          res += `<label for='${id}' class='form_label'>${obl} ${c.nombreCampo}</label>`;
+          res += `<textarea type='text' id='${id}' name='${c.nombreCampo}' class='form_textarea'></textarea>`;
           break;
 
         default:
